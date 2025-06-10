@@ -60,7 +60,7 @@ Return the square of the magnitude of a given `LorentzVectorLike`, i.e. the sum 
 
 """
 @inline @traitfn function getMagnitude2(lv::T) where {{T; IsLorentzVectorLike{T}}}
-    return hypot(getX(lv), getY(lv), getZ(lv))^2
+    return getX(lv)^2 + getY(lv)^2 + getZ(lv)^2
 end
 
 """
@@ -104,7 +104,7 @@ Return the squared invariant mass of a given `LorentzVectorLike`, i.e. the minko
 
 """
 @inline @traitfn function getInvariantMass2(lv::T) where {{T; IsLorentzVectorLike{T}}}
-    return getT(lv)^2 - hypot(getX(lv), getY(lv), getZ(lv))^2
+    return sq_diff(getT(lv), hypot(getX(lv), getY(lv), getZ(lv)))
 end
 
 """Function alias for [`getInvariantMass2`](@ref)"""
@@ -229,7 +229,7 @@ Return the relativistic gamma factor for a given `LorentzVectorLike`, i.e. the i
 
 """
 @inline @traitfn function getGamma(lv::T) where {{T; IsLorentzVectorLike{T}}}
-    return inv(sqrt(one(getT(lv)) - getBeta(lv)^2))
+    return inv(sq_diff_sqrt(one(getT(lv)), getBeta(lv)))
 end
 
 ########################
@@ -298,7 +298,7 @@ Return the squared transverse mass for a given `LorentzVectorLike`, i.e. the dif
 
 """
 @inline @traitfn function getTransverseMass2(lv::T) where {{T; IsLorentzVectorLike{T}}}
-    return getT(lv)^2 - getZ(lv)^2
+    return sq_diff(getT(lv), getZ(lv))
 end
 """Function alias for [`getTransverseMass2`](@ref)"""
 const getMt2 = getTransverseMass2

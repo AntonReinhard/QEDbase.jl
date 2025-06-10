@@ -95,6 +95,7 @@ using ConstructionBase
 
 include("errors.jl")
 include("utils.jl")
+include("math_helpers.jl")
 
 include("interfaces/dirac_tensors.jl")
 include("interfaces/gamma_matrices.jl")
